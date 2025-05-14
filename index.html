@@ -45,7 +45,7 @@
       <div>
         <i id="wishList-icon" class="bi text-2xl bi-heart-fill"></i>
       </div>
-    
+
 
       <div>
         <p class="user hidden">Welcome <span id="username">${currentUser.name}</span></p>
@@ -262,6 +262,69 @@
   </dialog>
 
   <!-- products -->
+
+  <!-- products details modal -->
+  <dialog id="product-modal" class="product-modal">
+    <div class="modal-header">
+      <h2>Product Details</h2>
+      <button class="modal-close">&times;</button>
+    </div>
+    <div class="modal-content">
+      <div class="product-details">
+
+        <div class="product-images">
+          <div class="sideImages">
+            <div class="topImage">
+              <img src="" alt="" class="product-imageSmall">
+            </div>
+            <div class="bottomImage">
+              <img src="" alt="" class="product-image-small">
+            </div>
+
+          </div>
+
+          <div class="largeImage">
+            <img src="" alt="" class="product-image">
+          </div>
+
+
+        </div>
+
+
+        <div class="product-info">
+          <h3></h3>
+
+          <p class="description"></p>
+
+          <p class="product-category"></p>
+          <p class="price-display">Price: </p>
+
+
+          <button id="viewReviewsBtn">Reviews</button>
+
+          <!-- <div class="viewReviewsBox">
+
+            <div class="review-head">
+              <span class="reviewerName"> ${review.reviewerName || "Anonymous"}</span>
+
+              <span class="review rating "><i class="bi bi-star-fill"></i></span>
+            </div>
+            <p class="reviewer-comment">${review.comment || "no comments yet"}</p>
+
+          </div>
+          <p class="availabilityStatus"></p> -->
+
+        </div>
+      </div>
+      <div id="moreInfo">
+        <ol id="descriptionInfo">
+
+        </ol>
+      </div>
+    </div>
+
+
+  </dialog>
 
   <main id="products-container" class="p-40 grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-20">
   </main>
