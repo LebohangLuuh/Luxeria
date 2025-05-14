@@ -1,8 +1,9 @@
 import {
   
-    fetchProducts,
-    filterProduct,
-    findProduct
+    fetchProducts, findProduct,
+    filterProduct, 
+    addItem, removeItem, updateQuantity, calculateTotal,
+    toggleItem,
   
 } from "../js/script.js";
 
@@ -10,6 +11,8 @@ const closeProductDialog = document.querySelector("dialog button");
 
 let currentProducts = [];
 const form = document.getElementById("registerForm");
+let cart = JSON.parse(localStorage.getItem('persistentCart')) || [];
+let wishlist = JSON.parse(localStorage.getItem('persistentwishlist')) || [];
 
 // DOM Elements
 const domElements = {
@@ -30,6 +33,78 @@ const domElements = {
         register: document.getElementById("register-modal"),
     },
 };
+
+//----------------------------------------------peristent cart and wishlist------------------------------------------------>
+const persistCart = () => {
+    localStorage.setItem('persistentCart', JSON.stringify(cart));
+}
+const persistWishlist = () => {
+    localStorage.setItem('persistentwishlist', JSON.stringify(wishlist));
+}
+const clearPersistentData = () => {
+    localStorage.removeItem('persistentCart');
+    localStorage.removeItem('persistentwishlist');
+}
+
+//------------------------------------------ Notification System------------------------------------------------------------->
+const showNotification = (message) => {
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    setTimeout(() => notification.remove(), 1500);
+};
+
+// ----------------------------------------------Cart Management------------------------------------------------------------------->
+const updateCartUI = () => {
+    // Update cart count
+    const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    domElements.cartIcon.querySelector('span').textContent = cartCount;
+
+    // Update cart modal
+    const cartContent = domElements.modals.cart.querySelector('.modal-content');
+    cartContent.innerHTML = cart.length ? cart.map(item => `
+        <div class="cart-item" data-id="${item.id}">
+            <img src="${item.thumbnail}" class="cart-item-image">
+            <div class="cart-item-info">
+                <h4>${item.title}</h4>
+                <p>R${item.price.toFixed(2)} 
+                    <button class="btn quantity-btn" data-action="decrease">-</button>
+                    ${item.quantity}
+                    <button class="btn quantity-btn" data-action="increase">+</button>
+                </p>
+                <p>Subtotal: R${(item.price * item.quantity).toFixed(2)}</p>
+                <button class="btn btn-primary remove-btn">Remove</button>
+            </div>
+        </div>
+    `).join('') : '<p>Your cart is empty</p>';
+
+    // Update cart summary
+    const total = calculateTotal(cart);
+    domElements.modals.cart.querySelector('.cart-summary').innerHTML = `
+        <h3>Total: R${total.toFixed(2)}</h3>
+        <button class="btn btn-primary checkout-btn">Checkout</button>
+        <button id = "clearCartBtn" class = "btn btn-primary clearCartBtn">CLEAR CART</button>
+        
+    `;
+};
+
+//-----------------------------------------------Wishlist Management------------------------------------------------------------->
+const updateWishlistUI = () => {
+    const wishlistContent = domElements.modals.wishlist.querySelector('.modal-content');
+    wishlistContent.innerHTML = wishlist.length ? wishlist.map(item => `
+        <div class="wishlist-item" data-id="${item.id}">
+            <img src="${item.thumbnail}" class="wishlist-item-image">
+            <div class="wishlist-item-info">
+                <h4>${item.title}</h4>
+                <p>R${item.price.toFixed(2)}</p>
+                <button class="btn btn-primary remove-btn">Remove</button>
+            </div>
+        </div>
+    `).join('') : '<p>Your wishlist is empty</p>';
+};
+
+
 
 // register
 let modalReg = document.getElementById("id03");
@@ -230,6 +305,115 @@ const renderProducts = async () => {
 //show products
 renderProducts();
 
+ // ---------------------------------------------------Event Handlers-------------------------------------------------------------------->
+const setupEventListeners = () => {
+
+   // Product interactions
+    if (!domElements.productsContainer) return;
+  
+    domElements.productsContainer.addEventListener("click", async (e) => {
+      const productElement = e.target.closest(".product");
+      if (!productElement) return;
+  
+      const productId = productElement.dataset.id;
+      const product = findProduct(currentProducts, productId);
+  
+      if (e.target.closest(".viewBtn")) {
+        showProductModal(product);
+      }
+    });
+
+    //------------------------- Product interactions ------------------------------------------------------------>
+    domElements.productsContainer.addEventListener('click', async (e) => {
+        const productElement = e.target.closest('.product');
+        if (!productElement) return;
+
+        const productId = productElement.dataset.id;
+        const product = findProduct(currentProducts, productId);
+
+
+        if (e.target.closest('.cartBtn')) {
+            cart = addItem(cart, product);
+            updateCartUI();
+            persistCart();
+            showNotification('Added to cart 🛒');
+        }
+
+        if (e.target.closest('.wishListBtn')) {
+            const result = toggleItem(wishlist, product);
+            wishlist = result.updatedList;
+            updateWishlistUI();
+            persistWishlist();
+            showNotification(result.action === 'added' ?
+                'Added to wishlist 💖' : 'Removed from wishlist ❌');
+        }
+    });
+
+
+    //----------------------------------Cart interactions--------------------------------------------------------->
+    domElements.modals.cart.addEventListener('click', (e) => {
+        const itemElement = e.target.closest('.cart-item');
+        if (!itemElement) return;
+
+        const productId = itemElement.dataset.id;
+
+        if (e.target.closest('.quantity-btn')) {
+            const action = e.target.dataset.action;
+            cart = updateQuantity(cart, parseInt(productId),
+                action === 'increase' ? 1 : -1);
+            updateCartUI();
+            persistCart();
+        }
+
+        if (e.target.closest('.remove-btn')) {
+            cart = removeItem(cart, parseInt(productId));
+            updateCartUI();
+            persistCart();
+            showNotification('Removed from cart 🗑️');
+        }
+        // if (e.target.closest('.clearCartBtn')){
+        //     clearCartFn();
+        //     updateCartUI;
+        // }
+    });
+
+    //--------------------------------- Wishlist interactions-------------------------------------------->
+    domElements.modals.wishlist.addEventListener('click', (e) => {
+        const itemElement = e.target.closest('.wishlist-item');
+        if (!itemElement) return;
+
+        const productId = parseInt(itemElement.dataset.id);
+        const product = findProduct(currentProducts, productId);
+
+        if (e.target.closest('.remove-btn')) {
+            const result = toggleItem(wishlist, product);
+            wishlist = result.updatedList;
+            updateWishlistUI();
+            persistWishlist();
+            showNotification('Removed from wishlist ❌');
+        }
+    });
+
+    //-----------------------------Modal close buttons----------------------------------------->
+    document.querySelectorAll('.modal-close').forEach(btn => {
+        btn.addEventListener('click', () => {
+            btn.closest('dialog').close();
+        });
+    });
+
+    //----------------------------Cart and Wishlist buttons------------------------------------------->
+    domElements.cartIcon.addEventListener('click', () => {
+        updateCartUI();
+        domElements.modals.cart.showModal();
+    });
+
+    domElements.wishlistIcon.addEventListener('click', () => {
+        updateWishlistUI();
+        domElements.modals.wishlist.showModal();
+    });
+
+};
+
 
 //filter products
 if (domElements.filterSelect) {
@@ -359,23 +543,7 @@ function showProductModal(product) {
     }
   }
 
-  // Event Handlers
-const setupEventListeners = () => {
-    // Product interactions
-    if (!domElements.productsContainer) return;
-  
-    domElements.productsContainer.addEventListener("click", async (e) => {
-      const productElement = e.target.closest(".product");
-      if (!productElement) return;
-  
-      const productId = productElement.dataset.id;
-      const product = findProduct(currentProducts, productId);
-  
-      if (e.target.closest(".viewBtn")) {
-        showProductModal(product);
-      }
-    });
-}
+ 
 
 
 

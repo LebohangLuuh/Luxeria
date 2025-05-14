@@ -1,3 +1,61 @@
+
+
+
+ 
+function addItem(cart, product) {
+  const existing = cart.find(item => item.id === product.id);
+  if (existing) {
+      existing.quantity++;
+  } else {
+      cart.push({ ...product, quantity: 1 });
+  }
+
+  return cart;
+}
+
+function removeItem(cart, productId) {
+  return cart.filter(item => item.id !== productId);
+}
+
+function updateQuantity(cart, productId, delta) {
+  return cart
+  .map(item => {
+      if (item.id !== productId) return item;
+
+      const updatedQuantity = item.quantity + delta;
+      return updatedQuantity > 0 
+          ? { ...item, quantity: updatedQuantity } 
+          : null;
+  })
+  .filter(item => item !== null);
+}
+
+function calculateTotal(cart) {
+  return cart.reduce((total, item) =>
+      total + (item.price * item.quantity), 0);
+}
+
+
+//--------------------------------------------- Wishlist operations ------------------------------------------->
+
+function  toggleItem(wishlist, product) {
+  const index = wishlist.findIndex(item => item.id === product.id);
+  if (index > -1) {
+      wishlist.splice(index, 1);
+      return { updatedList: [...wishlist], action: 'removed' };
+  }
+  return { updatedList: [...wishlist, product], action: 'added' };
+}
+
+
+
+
+
+
+
+
+
+
 // Product fetching and validation
 async function fetchProducts() {
   try {
