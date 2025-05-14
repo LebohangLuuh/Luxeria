@@ -45,7 +45,7 @@
       <div>
         <i id="wishList-icon" class="bi text-2xl bi-heart-fill"></i>
       </div>
-    
+
 
       <div>
         <p class="user hidden">Welcome <span id="username">${currentUser.name}</span></p>
@@ -263,11 +263,74 @@
 
   <!-- products -->
 
+  <!-- products details modal -->
+  <dialog id="product-modal" class="product-modal">
+    <div class="modal-header">
+      <h2>Product Details</h2>
+      <button class="modal-close">&times;</button>
+    </div>
+    <div class="modal-content">
+      <div class="product-details">
+
+        <div class="product-images">
+          <div class="sideImages">
+            <div class="topImage">
+              <img src="" alt="" class="product-imageSmall">
+            </div>
+            <div class="bottomImage">
+              <img src="" alt="" class="product-image-small">
+            </div>
+
+          </div>
+
+          <div class="largeImage">
+            <img src="" alt="" class="product-image">
+          </div>
+
+
+        </div>
+
+
+        <div class="product-info">
+          <h3></h3>
+
+          <p class="description"></p>
+
+          <p class="product-category"></p>
+          <p class="price-display">Price: </p>
+
+
+          <button id="viewReviewsBtn">Reviews</button>
+
+          <!-- <div class="viewReviewsBox">
+
+            <div class="review-head">
+              <span class="reviewerName"> ${review.reviewerName || "Anonymous"}</span>
+
+              <span class="review rating "><i class="bi bi-star-fill"></i></span>
+            </div>
+            <p class="reviewer-comment">${review.comment || "no comments yet"}</p>
+
+          </div>
+          <p class="availabilityStatus"></p> -->
+
+        </div>
+      </div>
+      <div id="moreInfo">
+        <ol id="descriptionInfo">
+
+        </ol>
+      </div>
+    </div>
+
+
+  </dialog>
+
   <main id="products-container" class="p-40 grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-20">
   </main>
 
   <!-- footer -->
-  <footer class="h-[15rem] text-white p-10 flex justify-between items-center bg-emerald-900 ">
+  <footer class="h-[15rem] text-white p-10 flex justify-between items-center bg-emerald-900">
     <div class="companyInfo">
       <ul>
         <li>
@@ -296,14 +359,14 @@
       </ul>
     </div>
 
-    <div class="details">
-      <div class="footerDetails">
-        <h5 class="pr-[10rem] justify-content-center items-center font-thin text-xl">Shaper | ABSA | Copyright 2025 |
+    <div class="details right-0">
+      <div class="footerDetails p-0 m-0">
+        <h5 class="pr-[10rem]  font-thin text-xl">Shaper | ABSA | Copyright 2025 |
           Luxéia Noir Online (Pty)
           Ltd.</h5>
       </div>
 
-      <div class="socials flex content-center gap-5 text-center text-4xl">
+      <div class="socials flex content-center gap-5 text-center text-3xl">
 
         <i class="bi p-10 bi-facebook"></i>
         <i class="bi p-10 bi-instagram"></i>
