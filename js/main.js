@@ -90,6 +90,99 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+// hide and show login/logout state
+function updateLoginState() {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  
+  const loginLink = document.querySelector(".login");
+  const registerLink = document.querySelector(".register");
+  const logoutLink = document.querySelector(".logout");
+  const userWelcome = document.querySelector(".user");
+  const usernameSpan = document.getElementById("username");
+  
+  if (currentUser) {
+    // User is logged in
+    loginLink.classList.add("hidden");
+    registerLink.classList.add("hidden");
+    logoutLink.classList.remove("hidden");
+    userWelcome.classList.remove("hidden");
+    
+    // Set the username in the welcome message
+    if (usernameSpan) {
+      usernameSpan.textContent = currentUser.name;
+    }
+  } else {
+    // User is logged out
+    loginLink.classList.remove("hidden");
+    registerLink.classList.remove("hidden");
+    logoutLink.classList.add("hidden");
+    userWelcome.classList.add("hidden");
+  }
+}
+
+// login
+document.addEventListener('DOMContentLoaded', () => {
+  const loginForm = document.getElementById('loginForm');
+  if (!loginForm) return;
+
+  const emailInput = document.getElementById('loginEmail');
+  const passwordInput = document.getElementById('loginPassword');
+  if (!emailInput || !passwordInput) return;
+
+  // all registered users from localStorage  
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = emailInput.value.trim().toLowerCase();
+    const password = passwordInput.value;
+
+    const user = users.find(u =>
+      u.email === email && u.password === password
+    );
+
+    if (!user) {
+      alert('Please enter valid email and password.');
+      return;
+    }
+
+    user.isLoggedIn = true;
+    localStorage.setItem('users', JSON.stringify(users));
+
+    localStorage.setItem('currentUser', JSON.stringify(user));
+
+    alert('Login successful!');
+    emailInput.value = '';
+    passwordInput.value = '';
+    document.getElementById('id01').style.display = 'none';
+    
+    // Update the UI to reflect logged-in state
+    updateLoginState();
+  });
+});
+
+
+// Initialize App
+document.addEventListener("DOMContentLoaded", async () => {
+  await renderProducts();
+  setupEventListeners();
+
+    // Update login/logout state
+  updateLoginState();
+
+    // Add logout functionality
+    const logoutLink = document.querySelector(".logout");
+    if (logoutLink) {
+      logoutLink.addEventListener("click", function() {
+        // Clear user data from localStorage
+        localStorage.removeItem("currentUser");
+        // Update the UI
+        updateLoginState();
+        // Show a logout message
+        alert("You have been logged out successfully");
+      });
+    }
+  });
 
 // products
 function renderProductList(products) {
