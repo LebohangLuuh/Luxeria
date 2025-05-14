@@ -39,13 +39,22 @@
     </div>
 
     <div class="right flex items-center gap-5 p-10">
+      <div class="cartCount">
+        <span class=" cartCount bg-amber-400 rounded-full relative left-8 bottom-3 ">0</span>
+        <i id="cart-icon" class="bi text-2xl bi-bag-fill"></i>
+      </div>
+      <div>
+        <i id="wishList-icon" class="bi text-2xl bi-heart-fill"></i>
+      </div>
+    
 
       <div>
         <p class="user hidden">Welcome <span id="username">${currentUser.name}</span></p>
       </div>
       <div>
         <a class="logout hover:text-amber-400 hover:font-bold cursor-pointer hidden"
-          onclick="document.getElementById('logout').style.display='block'"><i class="bi font-bold text-4xl bi-power"></i></a>
+          onclick="document.getElementById('logout').style.display='block'"><i
+            class="bi font-bold text-4xl bi-power"></i></a>
       </div>
 
       <div>
@@ -53,8 +62,8 @@
           onclick="document.getElementById('id01').style.display='block'">Login</a>
       </div>
       <div>
-        <a class="register hover:text-amber-400 hover:font-bold" onclick="document.getElementById('id03').style.display='block'"
-          style="width:auto;">Register</a>
+        <a class="register hover:text-amber-400 hover:font-bold"
+          onclick="document.getElementById('id03').style.display='block'" style="width:auto;">Register</a>
       </div>
     </div>
   </nav>
@@ -68,20 +77,14 @@
     </div>
   </section>
 
-  <div onclick="location.href='#products-container'" class="absolute inset-x-0 flex transform  justify-center items-center mt-[30rem]">
-    <button id="shopBtn" class="bg-amber-400 hover:text-2xl hover:scale-120 pointer-cursor text-white h-[3rem] w-[20rem] rounded-full">START SHOPPING</button>
+  <div onclick="location.href='#products-container'"
+    class="absolute inset-x-0 flex transform  justify-center items-center mt-[30rem]">
+    <button id="shopBtn"
+      class="bg-amber-400 hover:text-2xl hover:scale-120 pointer-cursor text-white h-[3rem] w-[20rem] rounded-full">START
+      SHOPPING</button>
   </div>
 
-  <div
-    class="sideNav z-10 bg-emerald-900 right-0 top-[40%] fixed w-[5%] h-auto p-[1.2rem] rounded-r-none rounded-3xl border]">
-    <div class="cartCount position-relative mb-5 ">
-      <span class=" cartCount bg-amber-400 rounded-full p-2 m-3 ">0</span>
-      <i id="cart-icon" class="bi text-3xl bi-bag-fill"></i>
-    </div>
-    <div>
-      <i id="wishList-icon" class="bi text-3xl bi-heart-fill"></i>
-    </div>
-  </div>
+
 
   <!-- Wishlist Modal -->
   <dialog id="wishlist-modal" class="modal w-[50%] overflow-x-hidden m-[auto]">
@@ -100,7 +103,8 @@
   </dialog>
 
   <!-- login modal -->
-  <div id="id01" class="modalLogin hidden absolute inset-0 w-full mt-[8rem] h-fit pb-[15rem] bg-[rgba(8,63,26,0.364)] pt-5 z-5">
+  <div id="id01"
+    class="modalLogin hidden absolute inset-0 w-full mt-[8rem] h-fit pb-[15rem] bg-[rgba(8,63,26,0.364)] pt-5 z-5">
 
     <form id="loginForm"
       class="modal-content justify-content-center items-center bg-white p-[5rem] mt-[5rem] ml-[35%] w-[35%] h-auto rounded-lg animate z-100"
@@ -258,11 +262,11 @@
     </div>
   </dialog>
 
-    <!-- products -->
+  <!-- products -->
 
-    <main id="products-container" class="p-40 grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-20">
-    </main>
-  
+  <main id="products-container" class="p-40 grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-20">
+  </main>
+
   <!-- footer -->
   <footer class="h-[15rem] text-white p-10 flex justify-between items-center bg-emerald-900 ">
     <div class="companyInfo">
