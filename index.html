@@ -15,7 +15,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css">
   <script type="module" src="./js/main.js" defer></script>
-  <!-- <link rel="stylesheet" href="style.css" /> -->
+  <link rel="stylesheet" href="style.css" />
+  
+
 </head>
 
 <body class="bg-teal-50 text-white font-poppins flex flex-col ">
@@ -40,7 +42,7 @@
 
     <div class="right flex items-center gap-5 p-10">
       <div class="cartCount" id = 'cart-icon'>
-        <span class=" bg-amber-400 rounded-full relative left-8 bottom-3 ">0</span>
+        <span class=" bg-white rounded-full relative left-8 bottom-3 p-1 text-black">0</span>
         <i  class="bi text-2xl bi-bag-fill"></i>
       </div>
       <div>
@@ -240,6 +242,7 @@
         <p class="rating text-emerald-900 text-xl font-thin"><i class="bi text-amber-400 bi-star-fill"></i>
           ${item.rating}</p>
       </div>
+     
 
       <div class="details flex-1 p-5 ">
         <div
@@ -260,73 +263,20 @@
         </div>
       </div>
     </div>
+    
+      <p class="reviews ml-8  text-xl font-bold text-emerald-900"> Reviews</p>
+      <div class="reviews-section mt-2 mb-10 ml-8  mt-[-10]">
+      
+         
+          </div>
+
+    </div>
+   
   </dialog>
 
   <!-- products -->
 
-  <!-- products details modal -->
-  <dialog id="product-modal" class="product-modal">
-    <div class="modal-header">
-      <h2>Product Details</h2>
-      <button class="modal-close">&times;</button>
-    </div>
-    <div class="modal-content">
-      <div class="product-details">
-
-        <div class="product-images">
-          <div class="sideImages">
-            <div class="topImage">
-              <img src="" alt="" class="product-imageSmall">
-            </div>
-            <div class="bottomImage">
-              <img src="" alt="" class="product-image-small">
-            </div>
-
-          </div>
-
-          <div class="largeImage">
-            <img src="" alt="" class="product-image">
-          </div>
-
-
-        </div>
-
-
-        <div class="product-info">
-          <h3></h3>
-
-          <p class="description"></p>
-
-          <p class="product-category"></p>
-          <p class="price-display">Price: </p>
-
-
-          <button id="viewReviewsBtn">Reviews</button>
-
-          <!-- <div class="viewReviewsBox">
-
-            <div class="review-head">
-              <span class="reviewerName"> ${review.reviewerName || "Anonymous"}</span>
-
-              <span class="review rating "><i class="bi bi-star-fill"></i></span>
-            </div>
-            <p class="reviewer-comment">${review.comment || "no comments yet"}</p>
-
-          </div>
-          <p class="availabilityStatus"></p> -->
-
-        </div>
-      </div>
-      <div id="moreInfo">
-        <ol id="descriptionInfo">
-
-        </ol>
-      </div>
-    </div>
-
-
-  </dialog>
-
+  
   <main id="products-container" class="p-40 grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-20">
   </main>
 

@@ -1,10 +1,10 @@
 import {
-  
+
     fetchProducts, findProduct,
-    filterProduct, 
+    filterProduct,
     addItem, removeItem, updateQuantity, calculateTotal,
     toggleItem,
-  
+
 } from "../js/script.js";
 
 const closeProductDialog = document.querySelector("dialog button");
@@ -198,38 +198,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // hide and show login/logout state
 function updateLoginState() {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  
-  const loginLink = document.querySelector(".login");
-  const registerLink = document.querySelector(".register");
-  const logoutLink = document.querySelector(".logout");
-  const userWelcome = document.querySelector(".user");
-  const usernameSpan = document.getElementById("username");
-  
-  if (currentUser) {
-    // User is logged in
-    loginLink.classList.add("hidden");
-    registerLink.classList.add("hidden");
-    logoutLink.classList.remove("hidden");
-    userWelcome.classList.remove("hidden");
-    
-    // Set the username in the welcome message
-    if (usernameSpan) {
-      usernameSpan.textContent = currentUser.name;
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    const loginLink = document.querySelector(".login");
+    const registerLink = document.querySelector(".register");
+    const logoutLink = document.querySelector(".logout");
+    const userWelcome = document.querySelector(".user");
+    const usernameSpan = document.getElementById("username");
+
+    if (currentUser) {
+        // User is logged in
+        loginLink.classList.add("hidden");
+        registerLink.classList.add("hidden");
+        logoutLink.classList.remove("hidden");
+        userWelcome.classList.remove("hidden");
+
+        // Set the username in the welcome message
+        if (usernameSpan) {
+            usernameSpan.textContent = currentUser.name;
+        }
+    } else {
+        // User is logged out
+        loginLink.classList.remove("hidden");
+        registerLink.classList.remove("hidden");
+        logoutLink.classList.add("hidden");
+        userWelcome.classList.add("hidden");
     }
-  } else {
-    // User is logged out
-    loginLink.classList.remove("hidden");
-    registerLink.classList.remove("hidden");
-    logoutLink.classList.add("hidden");
-    userWelcome.classList.add("hidden");
-  }
 }
 
 // login
 document.addEventListener('DOMContentLoaded', () => {
-  const loginForm = document.getElementById('loginForm');
-  if (!loginForm) return;
+    const loginForm = document.getElementById('loginForm');
+    if (!loginForm) return;
 
   const emailInput = document.getElementById('loginEmail');
   const passwordInput = document.getElementById('loginPassword');
@@ -246,9 +246,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const email = emailInput.value.trim().toLowerCase();
     const password = passwordInput.value;
 
-    const user = users.find(u =>
-      u.email === email && u.password === password
-    );
+        const user = users.find(u =>
+            u.email === email && u.password === password
+        );
 
     if (!user) {
       alert('Please enter valid email and password.');
@@ -260,16 +260,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     localStorage.setItem('users', JSON.stringify(users));
 
-    localStorage.setItem('currentUser', JSON.stringify(user));
+        localStorage.setItem('currentUser', JSON.stringify(user));
 
-    alert('Login successful!');
-    emailInput.value = '';
-    passwordInput.value = '';
-    document.getElementById('id01').style.display = 'none';
-    
-    // Update the UI to reflect logged-in state
-    updateLoginState();
-  });
+        alert('Login successful!');
+        emailInput.value = '';
+        passwordInput.value = '';
+        document.getElementById('id01').style.display = 'none';
+
+        // Update the UI to reflect logged-in state
+        updateLoginState();
+    });
 });
 
 
@@ -320,7 +320,7 @@ const renderProducts = async () => {
 //show products
 renderProducts();
 
- // ---------------------------------------------------Event Handlers-------------------------------------------------------------------->
+// ---------------------------------------------------Event Handlers-------------------------------------------------------------------->
 const setupEventListeners = () => {
 
   //-------Checkout button handler---->
@@ -342,18 +342,7 @@ const setupEventListeners = () => {
 
    // Product interactions
     if (!domElements.productsContainer) return;
-  
-    domElements.productsContainer.addEventListener("click", async (e) => {
-      const productElement = e.target.closest(".product");
-      if (!productElement) return;
-  
-      const productId = productElement.dataset.id;
-      const product = findProduct(currentProducts, productId);
-  
-      if (e.target.closest(".viewBtn")) {
-        showProductModal(product);
-      }
-    });
+
 
     //------------------------- Product interactions ------------------------------------------------------------>
     domElements.productsContainer.addEventListener('click', async (e) => {
@@ -363,6 +352,26 @@ const setupEventListeners = () => {
         const productId = productElement.dataset.id;
         const product = findProduct(currentProducts, productId);
 
+        if (e.target.closest('.viewBtn')){
+            const modal= domElements.modals.product;
+            const product = findProduct(currentProducts, productId);
+        
+
+        const reviewsContainer = modal.querySelector(".reviews-section");
+        let reviewRating = '<i class="bi bi-star-fill" id="icon"></i>'.repeat(Math.round(product.rating)) + '<i class="bi bi-star" id="icon"></i>'.repeat(5 - Math.round(product.rating));
+        reviewsContainer.innerHTML = product.reviews.map(review => `
+    <div class="reviewDetails">
+        <p class="reviewerName"><strong>${review.reviewerName}</strong></p>
+         <p class="rating">${reviewRating}</p>
+        <p class="comment">${review.comment}</p>
+        <hr>
+       
+    </div>
+       `).join('') || "<p>No reviews available</p>";
+       modal.showModal();
+       showProductModal(product);
+
+        }
 
         if (e.target.closest('.cartBtn')) {
             cart = addItem(cart, product);
@@ -452,132 +461,132 @@ const setupEventListeners = () => {
 //filter products
 if (domElements.filterSelect) {
     domElements.filterSelect.addEventListener("change", () => {
-      const category = domElements.filterSelect.value;
-      const filtered =
-        !category || category === "All Categories"
-          ? currentProducts
-          : currentProducts.filter((p) => p.category === category);
-      renderProductList(filtered);
+        const category = domElements.filterSelect.value;
+        const filtered =
+            !category || category === "All Categories"
+                ? currentProducts
+                : currentProducts.filter((p) => p.category === category);
+        renderProductList(filtered);
     });
-  }
+}
 // show products
 function showProductModal(product) {
     const modal = domElements.modals.product;
     if (!modal) {
-      console.error("Product modal not found in the DOM");
-      return;
+        console.error("Product modal not found in the DOM");
+        return;
     }
-  
+
     // Main image
     const mainImg = modal.querySelector(".detailsModal > img");
     if (mainImg) {
-      mainImg.src = product.thumbnail;
-      mainImg.alt = product.title;
+        mainImg.src = product.thumbnail;
+        mainImg.alt = product.title;
     }
-  
+
     // alternative images container
     const altImagesContainer = modal.querySelector(".altImagesContainer");
     if (altImagesContainer) {
-      // alternative image elements
-      const altImages = altImagesContainer.querySelectorAll(".altImages");
-      altImagesContainer.className = "altImagesContainer flex flex-row flex-1 w-[30%]"
-  
-      // clear images 
-      altImages.forEach(imgElement => {
-        imgElement.src = "";
-        imgElement.alt = "";
-      });
-  
-      // alternative images
-      if (product.images && product.images.length > 0) {
-        altImages.forEach((imgElement, index) => {
-          if (index < product.images.length) {
-            imgElement.src = product.images[index];
-            imgElement.alt = product.title;
-          }
+        // alternative image elements
+        const altImages = altImagesContainer.querySelectorAll(".altImages");
+        altImagesContainer.className = "altImagesContainer flex flex-row flex-1 w-[30%]"
+
+        // clear images 
+        altImages.forEach(imgElement => {
+            imgElement.src = "";
+            imgElement.alt = "";
         });
-      }
+
+        // alternative images
+        if (product.images && product.images.length > 0) {
+            altImages.forEach((imgElement, index) => {
+                if (index < product.images.length) {
+                    imgElement.src = product.images[index];
+                    imgElement.alt = product.title;
+                }
+            });
+        }
     }
-  
+
     // Brand
     const brand = modal.querySelector(".brand");
     if (brand) brand.textContent = `Brand: ${product.brand}`;
-  
+
     // Rating
     const rating = modal.querySelector(".rating");
     if (rating) {
-      // round rating to the nearest integer
-      const roundedRating = Math.round(product.rating);
-  
-      //  stars rating
-      let starsHTML = '';
-      for (let i = 0; i < roundedRating; i++) {
-        starsHTML += '<i class="bi gap-1  text-amber-400 bi-star-fill"></i> ';
-      }
-  
-      rating.innerHTML = `Rating : ${starsHTML}`;
+        // round rating to the nearest integer
+        const roundedRating = Math.round(product.rating);
+
+        //  stars rating
+        let starsHTML = '';
+        for (let i = 0; i < roundedRating; i++) {
+            starsHTML += '<i class="bi gap-1  text-amber-400 bi-star-fill"></i> ';
+        }
+
+        rating.innerHTML = `Rating : ${starsHTML}`;
     }
-  
+
     // Discount
     const discount = modal.querySelector(".discount");
     if (discount) discount.textContent = `${product.discountPercentage}%`;
-  
+
     // Title
     const title = modal.querySelector(".title");
     if (title) title.textContent = product.title;
-  
+
     // Category
     const category = modal.querySelector(".category");
     if (category) category.textContent = `Category: ${product.category}`;
-  
+
     // Description
     const description = modal.querySelector(".description");
     if (description) description.textContent = product.description;
-  
-   // Stock
-  const availabilityStatusElements = modal.querySelectorAll(".stock");
-  availabilityStatusElements.forEach((element) => {
-    element.textContent = product.availabilityStatus;
-    // Change color based on availability status
-    const status = product.availabilityStatus.toLowerCase();
-    if (status === 'in stock') {
-      element.style.color = '#064e3b'; // Bright green
-      element.style.fontWeight = 'bold';
-    } else if (status === 'low stock') {
-      element.style.color = 'red'; // You can use '#FF0000' for a brighter red if you want
-      element.style.fontWeight = 'bold';
-    } else {
-      element.style.color = '';
-      element.style.fontWeight = '';
-    }
-  });
-    
-  
+
+    // Stock
+    const availabilityStatusElements = modal.querySelectorAll(".stock");
+    availabilityStatusElements.forEach((element) => {
+        element.textContent = product.availabilityStatus;
+        // Change color based on availability status
+        const status = product.availabilityStatus.toLowerCase();
+        if (status === 'in stock') {
+            element.style.color = '#064e3b'; // Bright green
+            element.style.fontWeight = 'bold';
+        } else if (status === 'low stock') {
+            element.style.color = 'red'; // You can use '#FF0000' for a brighter red if you want
+            element.style.fontWeight = 'bold';
+        } else {
+            element.style.color = '';
+            element.style.fontWeight = '';
+        }
+    });
+
+
     // Quantity
     const quantity = modal.querySelector(".quantity");
     if (quantity) quantity.textContent = `Minimum order Quantity: ${product.minimumOrderQuantity}`;
-  
+
     // return policy
     const returnPolicy = modal.querySelector(".returnPolicy");
     if (returnPolicy) returnPolicy.textContent = `Return Policy: ${product.returnPolicy}`
-  
+
     // warranty info
     const warranty = modal.querySelector(".warrantyInfo");
     if (warranty) warranty.textContent = `Warranty Info : ${product.warrantyInformation}`
-  
+
     // Price
     const price = modal.querySelector(".price");
     if (price) price.textContent = `R${product.price.toFixed(2)}`;
-  
+
     // Show the modal
     if (typeof modal.showModal === "function") {
-      modal.showModal();
+        modal.showModal();
     } else {
-      modal.style.display = "block";
+        modal.style.display = "block";
     }
-  }
+}
 
- 
+
 
 
 
@@ -585,28 +594,28 @@ function showProductModal(product) {
 document.addEventListener("DOMContentLoaded", () => {
     const viewBtns = domElements.productsContainer.querySelectorAll('.viewBtn');
     viewBtns.forEach(btn => {
-      btn.addEventListener('click', function () {
-        const productId = this.getAttribute('data-id');
-        const product = currentProducts.find(p => String(p.id) === String(productId));
-        if (product) {
-          showProductModal(product);
-        }
-      });
+        btn.addEventListener('click', function () {
+            const productId = this.getAttribute('data-id');
+            const product = currentProducts.find(p => String(p.id) === String(productId));
+            if (product) {
+                showProductModal(product);
+            }
+        });
     });
 })
 // Modal close buttons
 document.querySelectorAll(".modal-close").forEach((btn) => {
     btn.addEventListener("click", () => {
-      btn.closest("dialog").close();
+        btn.closest("dialog").close();
     });
-  });
-  
+});
+
 
 
 // Initialize App
 document.addEventListener("DOMContentLoaded", async () => {
-  await renderProducts();
-  setupEventListeners();
+    await renderProducts();
+    setupEventListeners();
 
   // Update login/logout state
   updateLoginState();
