@@ -237,27 +237,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Initialize App
-document.addEventListener("DOMContentLoaded", async () => {
-  await renderProducts();
-  setupEventListeners();
-
-    // Update login/logout state
-  updateLoginState();
-
-    // Add logout functionality
-    const logoutLink = document.querySelector(".logout");
-    if (logoutLink) {
-      logoutLink.addEventListener("click", function() {
-        // Clear user data from localStorage
-        localStorage.removeItem("currentUser");
-        // Update the UI
-        updateLoginState();
-        // Show a logout message
-        alert("You have been logged out successfully");
-      });
-    }
-  });
 
 // products
 function renderProductList(products) {
@@ -569,8 +548,25 @@ document.querySelectorAll(".modal-close").forEach((btn) => {
   
 
 
- // Initialize App
+// Initialize App
 document.addEventListener("DOMContentLoaded", async () => {
-    await renderProducts();
-    setupEventListeners();
-})
+  await renderProducts();
+  setupEventListeners();
+
+    // Update login/logout state
+  updateLoginState();
+
+    // Add logout functionality
+    const logoutLink = document.querySelector(".logout");
+    if (logoutLink) {
+      logoutLink.addEventListener("click", function() {
+        // Clear user data from localStorage
+        localStorage.removeItem("currentUser");
+        // Update the UI
+        updateLoginState();
+        // Show a logout message
+        alert("You have been logged out successfully");
+      });
+    }
+  });
+

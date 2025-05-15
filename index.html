@@ -15,7 +15,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css">
   <script type="module" src="./js/main.js" defer></script>
-  <link rel="stylesheet" href=".style.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body class="bg-teal-50 text-white font-poppins flex flex-col ">
@@ -39,9 +39,9 @@
     </div>
 
     <div class="right flex items-center gap-5 p-10">
-      <div class="cartCount">
-        <span class=" cartCount bg-amber-400 rounded-full relative left-8 bottom-3 ">0</span>
-        <i id="cart-icon" class="bi text-2xl bi-bag-fill"></i>
+      <div class="cartCount" id = 'cart-icon'>
+        <span class=" bg-amber-400 rounded-full relative left-8 bottom-3 ">0</span>
+        <i  class="bi text-2xl bi-bag-fill"></i>
       </div>
       <div>
         <i id="wishList-icon" class="bi text-2xl bi-heart-fill"></i>

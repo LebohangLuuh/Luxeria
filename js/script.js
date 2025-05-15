@@ -124,3 +124,5 @@ document.addEventListener("DOMContentLoaded", () => {
     updateLoggedinState;
   });
 });
+
+export { addItem, removeItem, updateQuantity, calculateTotal, toggleItem };
