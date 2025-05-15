@@ -51,13 +51,13 @@ const clearPersistentData = () => {
 }
 
 //------------------------------------------ Notification System------------------------------------------------------------->
-// const showNotification = (message) => {
-//     const notification = document.createElement('div');
-//     notification.className = 'notification';
-//     notification.textContent = message;
-//     document.body.appendChild(notification);
-//     setTimeout(() => notification.remove(), 1500);
-// };
+const showNotification = (message) => {
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    setTimeout(() => notification.remove(), 1500);
+};
 
 // ----------------------------------------------Cart Management------------------------------------------------------------------->
 const updateCartUI = () => {
@@ -68,29 +68,40 @@ const updateCartUI = () => {
     // Update cart modal
     const cartContent = domElements.modals.cart.querySelector('.modal-content');
     cartContent.innerHTML = cart.length ? cart.map(item => `
-        <div class="cart-item" data-id="${item.id}">
+        <div class="cart-item flex" data-id="${item.id}">
+        <div>
             <img src="${item.thumbnail}" class="cart-item-image">
-            <div class="cart-item-info">
-                <h4>${item.title}</h4>
-                <p>R${item.price.toFixed(2)} 
-                    <button class="btn quantity-btn" data-action="decrease">-</button>
-                    ${item.quantity}
-                    <button class="btn quantity-btn" data-action="increase">+</button>
-                </p>
-                <p>Subtotal: R${(item.price * item.quantity).toFixed(2)}</p>
-                <button class="btn btn-primary remove-btn">Remove</button>
+            </div>
+            <div class="cart-item-info m-10 w-full">
+                <h4 class="cart-item-title text-2xl text-gray-400 font-bold">${item.title}</h4>
+                <p class="cart-item-desc text-emerald-900 font-thin text-lg">${item.category}</p>
+                <p class="cart-item-price text-amber-400 text-3xl font-thin">R${item.price.toFixed(2)} </>
+                <br> 
+
+                    <div class="flex gap-2">
+                    <button class="btn quantity-btn bg-red-500 rounded-xl font-bold text-2xl text-white" data-action="decrease">-</button>
+                     <p class="cart-item-quantity text-2xl"> ${item.quantity} Item(s)</p>
+                    <button class="btn quantity-btn bg-emerald-900 rounded-xl font-bold text-2xl text-white" data-action="increase">+</button>
+                    </div>
+
+                <p class="bold mt-5">Subtotal: R${(item.price * item.quantity).toFixed(2)}</p>
+                <button class="btn btn-primary remove-btn mt-5 text-red-500 border border-gray-200 rounded-full w-full h-[3rem] hover:bg-red-500 hover:text-white">Remove</button>
             </div>
         </div>
     `).join('') : '<p>Your cart is empty</p>';
 
+    
     // Update cart summary
     const total = calculateTotal(cart);
     domElements.modals.cart.querySelector('.cart-summary').innerHTML = `
-        <h3>Total: R${total.toFixed(2)}</h3>
-        <button class="btn btn-primary checkout-btn">Checkout</button>
-        <button id = "clearCartBtn" class = "btn btn-primary clearCartBtn">CLEAR CART</button>
-        
-    `;
+     <div class="cart-summary text-end flex flex-col left-9 position-relative">
+      <h3 class="font-bold text-emerald-900 text-3xl">Cart Summary</h3>
+      <p class="text-amber-400 text-3xl font-thin ">Total: R${total.toFixed(2)}</p>
+        <button class="btn btn-primary checkout-btn rounded-full bg-emerald-900 h-12 m-2 transform hover:scale-105 hover:bg-emerald-900 hover:text-amber-400 text-white w-full">Checkout</button>
+        <button id = "clearCartBtn" class="btn btn-primary clearCartBtn rounded-full hover:text-white  m-2 text-red-500 h-12  transform hover:scale-105 hover:bg-red-600 w-full">Clear Cart</button>
+        </div>`
+    ;
+    
 };
 
 //-----------------------------------------------Wishlist Management------------------------------------------------------------->
@@ -112,18 +123,18 @@ const updateWishlistUI = () => {
 const handleCheckout = (e) => {
   e.preventDefault();
   if (!currentUser) {
-      alert('Please log in or register to proceed with checkout!');
+      showNotification('Please log in or register to proceed with checkout!');
       domElements.modals.login.showModal();
       return;
   }
   if (cart.length !== 0) {
-      alert('✔Checkout successful! Your order is being processed !');
+      showNotification('✔Checkout successful! Your order is being processed !');
       clearCartFn();
       clearPersistentData(); 
       updateCartUI();
   } 
   else {
-      alert('⚠️ Your cart is empty! Please add items to your cart before checking out!');
+      showNotification('⚠️ Your cart is empty! Please add items to your cart before checking out!');
   }
 }
 
@@ -156,12 +167,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const confirmPassword = form.confirmPassword.value;
 
         if (!name || !email || !password || !confirmPassword) {
-            alert('All fields are required.');
+            showNotification('All fields are required.');
             return;
         }
 
         if (password !== confirmPassword) {
-            alert('Passwords do not match.');
+            showNotification('Passwords do not match.');
             return;
         }
 
@@ -169,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
             u.email === email
         );
         if (isDuplicate) {
-            alert('A user with that name or email already exists.');
+            showNotification('A user with that name or email already exists.');
             return;
         }
 
@@ -184,12 +195,12 @@ document.addEventListener('DOMContentLoaded', () => {
         users.push(newUser);
         try {
             localStorage.setItem('users', JSON.stringify(users));
-            alert('Registration successful! Please log in.');
+            showNotification('Registration successful! Please log in.');
             document.getElementById('id03').style.display = 'none'
             document.getElementById('id01').style.display = 'block'
         } catch (err) {
             console.error('Storage error:', err);
-            alert('Sorry, registration failed. Please try again.');
+            showNotification('Sorry, registration failed. Please try again.');
             form.reset();
         }
     });
@@ -251,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
         );
 
     if (!user) {
-      alert('Please enter valid email and password.');
+      showNotification('Please enter valid email and password.');
       console.log("")
       return;
     }
@@ -262,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         localStorage.setItem('currentUser', JSON.stringify(user));
 
-        alert('Login successful!');
+        showNotification('Login successful!');
         emailInput.value = '';
         passwordInput.value = '';
         document.getElementById('id01').style.display = 'none';
@@ -377,7 +388,7 @@ const setupEventListeners = () => {
             cart = addItem(cart, product);
             updateCartUI();
             persistCart();
-            alert('Added to cart 🛒');
+            showNotification('Added to cart 🛒');
         }
 
         if (e.target.closest('.wishListBtn')) {
@@ -385,7 +396,7 @@ const setupEventListeners = () => {
             wishlist = result.updatedList;
             updateWishlistUI();
             persistWishlist();
-            alert(result.action === 'added' ?
+            showNotification(result.action === 'added' ?
                 'Added to wishlist 💖' : 'Removed from wishlist ❌');
         }
     });
@@ -410,7 +421,7 @@ const setupEventListeners = () => {
             cart = removeItem(cart, parseInt(productId));
             updateCartUI();
             persistCart();
-            alert('Removed from cart 🗑️');
+            showNotification('Removed from cart 🗑️');
         }
         //-------------------clearCart---------------------->
         // if (e.target.closest('.clearCartBtn')){
@@ -433,7 +444,7 @@ const setupEventListeners = () => {
             wishlist = result.updatedList;
             updateWishlistUI();
             persistWishlist();
-            alert('Removed from wishlist ❌');
+            showNotification('Removed from wishlist ❌');
         }
     });
 
@@ -629,7 +640,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       // Update the UI
       updateLoginState();
       // Show a logout message
-      alert("You have been logged out successfully");
+      showNotification("You have been logged out successfully");
     });
   }
 
