@@ -14,6 +14,10 @@ const form = document.getElementById("registerForm");
 let cart = JSON.parse(localStorage.getItem('persistentCart')) || [];
 let wishlist = JSON.parse(localStorage.getItem('persistentwishlist')) || [];
 
+ let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+ console.log(currentUser);
+
 // DOM Elements
 const domElements = {
 
@@ -103,6 +107,33 @@ const updateWishlistUI = () => {
         </div>
     `).join('') : '<p>Your wishlist is empty</p>';
 };
+//--------------------------------------------------Checkout---------------------------------------------------------------------->
+
+const handleCheckout = (e) => {
+  e.preventDefault();
+  if (!currentUser) {
+      showNotification('Please log in or register to proceed with checkout!');
+      domElements.modals.login.showModal();
+      return;
+  }
+  if (cart.length !== 0) {
+      showNotification('✔Checkout successful! Your order is being processed !');
+      clearCartFn();
+      clearPersistentData(); 
+      updateCartUI();
+  } 
+  else {
+      showNotification('⚠️ Your cart is empty! Please add items to your cart before checking out!');
+  }
+}
+
+//---------------------------------------------clearCart function----------------------------------------------------------->
+const clearCartFn = () =>{
+  cart.length = 0;
+  updateCartUI;
+  localStorage.removeItem('persistentCart');
+
+}
 
 
 
@@ -292,6 +323,15 @@ renderProducts();
  // ---------------------------------------------------Event Handlers-------------------------------------------------------------------->
 const setupEventListeners = () => {
 
+  //-------Checkout button handler---->
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('checkout-btn')) {
+        handleCheckout(e);
+        //domElements.modals.cart.close();
+    }
+});
+
+
    // Product interactions
     if (!domElements.productsContainer) return;
   
@@ -355,10 +395,12 @@ const setupEventListeners = () => {
             persistCart();
             showNotification('Removed from cart 🗑️');
         }
-        // if (e.target.closest('.clearCartBtn')){
-        //     clearCartFn();
-        //     updateCartUI;
-        // }
+        //-------------------clearCart---------------------->
+        if (e.target.closest('.clearCartBtn')){
+          console.log("Buton works...............")
+            clearCartFn();
+            updateCartUI;
+        }
     });
 
     //--------------------------------- Wishlist interactions-------------------------------------------->

@@ -47,14 +47,25 @@ function  toggleItem(wishlist, product) {
   return { updatedList: [...wishlist, product], action: 'added' };
 }
 
+//----------------------------------------------functions that deal with user specifivc cart----------------------------------->
+function saveUserCart(email, cart, userCarts) {
+     
+  const savedCart = { ...userCarts,
+      [email]: [...cart] // Create a copy of the cart
+  };
+  return savedCart;
+}
 
 
+function loadUserCart(email, userCarts) {
+  return userCarts[email] || [];
+}
 
-
-
-
-
-
+function clearUserCart(email, userCarts) {
+  const newUserCarts = { ...userCarts };
+  delete newUserCarts[email];
+  return newUserCarts;
+}
 
 // Product fetching and validation
 async function fetchProducts() {
@@ -125,4 +136,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-export { addItem, removeItem, updateQuantity, calculateTotal, toggleItem };
+export { addItem, removeItem, updateQuantity, calculateTotal, toggleItem, saveUserCart, loadUserCart, clearUserCart };
