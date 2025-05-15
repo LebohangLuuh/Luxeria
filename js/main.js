@@ -202,13 +202,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const emailInput = document.getElementById('loginEmail');
   const passwordInput = document.getElementById('loginPassword');
+
   if (!emailInput || !passwordInput) return;
 
+  
   // all registered users from localStorage  
   const users = JSON.parse(localStorage.getItem('users') || '[]');
 
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
+
     const email = emailInput.value.trim().toLowerCase();
     const password = passwordInput.value;
 
@@ -218,10 +221,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!user) {
       alert('Please enter valid email and password.');
+      console.log("")
       return;
     }
 
     user.isLoggedIn = true;
+
     localStorage.setItem('users', JSON.stringify(users));
 
     localStorage.setItem('currentUser', JSON.stringify(user));
@@ -553,20 +558,38 @@ document.addEventListener("DOMContentLoaded", async () => {
   await renderProducts();
   setupEventListeners();
 
-    // Update login/logout state
+  // Update login/logout state
   updateLoginState();
 
-    // Add logout functionality
-    const logoutLink = document.querySelector(".logout");
-    if (logoutLink) {
-      logoutLink.addEventListener("click", function() {
-        // Clear user data from localStorage
-        localStorage.removeItem("currentUser");
-        // Update the UI
-        updateLoginState();
-        // Show a logout message
-        alert("You have been logged out successfully");
-      });
-    }
-  });
+  // Add logout functionality
+  const logoutLink = document.querySelector(".logout");
+  if (logoutLink) {
+    logoutLink.addEventListener("click", function() {
+      // Clear user data from localStorage
+      localStorage.removeItem("currentUser");
+      // Update the UI
+      updateLoginState();
+      // Show a logout message
+      alert("You have been logged out successfully");
+    });
+  }
+
+  // Add login functionality
+  const loginLink = document.querySelector(".login");
+  if (loginLink) {
+    loginLink.addEventListener("click", function(e) {
+      e.preventDefault();
+      document.getElementById('id01').style.display = 'block';
+    });
+  }
+
+  // Add register functionality
+  const registerLink = document.querySelector(".register");
+  if (registerLink) {
+    registerLink.addEventListener("click", function(e) {
+      e.preventDefault();
+      document.getElementById('id03').style.display = 'block';
+    });
+  }
+});
 

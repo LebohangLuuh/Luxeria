@@ -78,7 +78,7 @@ button:hover {
 }
 
 /*---------------------- NAVBAR ------------------------*/
-
+/* 
 nav {
     height: 8rem;
     background: linear-gradient(135deg, var(--primary100), var(--primary150));
@@ -101,7 +101,7 @@ nav .logo .slogan {
     font-size: small;
 }
 
-/*---------------------- FOOTER ------------------------*/
+/*---------------------- FOOTER ------------------------
 
 
 
@@ -146,17 +146,17 @@ nav .right i {
 nav .right i:hover {
     color: var(--white);
     font-size: 1.8rem;
-}
+} */
 
 /*-------------------- MAIN ---------------------*/
-main {
+/* main {
     padding: var(--space-lg);
     display: flex;
     flex-direction: column;
     gap: 2rem;
     background-image: url("https://img.freepik.com/free-vector/abstract-background-with-lines_1035-9038.jpg?semt=ais_hybrid&w=740");
     background-size: cover;
-}
+} */
 
 
 
@@ -167,7 +167,7 @@ main {
 
 
 /*----------------------- PRODUCT ----------------*/
-
+/* 
 #products-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
@@ -245,7 +245,7 @@ main {
     padding: var(--space-xm);
     border-radius: var(--space-xm) 0 var(--space-xm) 0;
     font-weight: 200;
-}
+} */
 
 /* -------Auth state styles------------- */
 .auth-buttons {
@@ -390,7 +390,7 @@ form {
 }
 
 /*--------------------------------------------------*/
-.form-group {
+/* .form-group {
     position: relative;
     margin-bottom: 1.5rem;
 }
@@ -401,9 +401,9 @@ form {
     left: 0;
     color: var(--red);
     font-size: 0.8rem;
-}
+} */
 /*------------------------------- Product Modal Styles--------------------------------- */
-.product-modal {
+/* .product-modal {
     max-width: 900px;
     width: 95%;
     border-radius: 12px;
@@ -600,7 +600,7 @@ form {
 
 .review-comment {
     line-height: 1.5;
-}
+} */
 
 /*------------------ Responsive adjustments--------------------- */
 @media (max-width: 768px) {
