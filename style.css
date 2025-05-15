@@ -1,183 +1,22 @@
 
-/* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    list-style-type: none;
-    text-decoration: none;
-    font-family: "Poppins", sans-serif;
-} */
 
-/* body {
-    background: var(--gray50);
-    color: var(--gray150);
-} */
 
-/* button {
-    border: none;
-    transition: var(--transition-sm);
-    border-radius: var(--space-md);
-    cursor: pointer;
-} */
 
-/* button:hover {
-    transform: scale(1.05);
-} */
-
-/* .btn-primary {
-    background: linear-gradient(45deg, var(--primary100), var(--primary150));
-    color: white;
-    padding: 12px 24px;
-    border-radius: 30px;
+.reviewerName{
+    font-size: 1.2em;
     font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-}
-
-.btn-secondary {
-    background: linear-gradient(45deg, var(--green100), var(--green150));
-    color: white;
-    padding: 12px 24px;
-    border-radius: 30px;
-    font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
-
-.btn-secondary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-    background: linear-gradient(45deg, var(--green150), var(--green100));
-} */
-
-/*---------------------- NAVBAR ------------------------*/
-/* 
-nav {
-    height: 8rem;
-    background: linear-gradient(135deg, var(--primary100), var(--primary150));
-    color: white;
-    padding: var(--space-sm) var(--space-md);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 50;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-nav .logo .slogan {
-    font-family: sans-serif;
-    font-weight: 200;
-    font-style: italic;
-    font-size: small;
-}
-
-/*---------------------- FOOTER ------------------------
-
-
-
-
-nav .right {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-nav .right .cartCount {
-    position: relative;
-}
-
-nav .right .cartCount span {
-    position: absolute;
-    top: -0.6rem;
-    right: -0.8rem;
-    background: var(--red);
-    padding: 0 0.5rem;
-    border-radius: 50%;
-}
-
-nav .right a {
-    color: var(--gray50);
-    font-size: 1.2rem;
-    transition: var(--transition-sm);
-}
-
-nav .right a:hover {
-    color: var(--white);
-    font-weight: bolder;
-}
-
-nav .right i {
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: var(--transition-sm);
-}
-
-nav .right i:hover {
-    color: var(--white);
-    font-size: 1.8rem;
-} */
-
-/*-------------------- MAIN ---------------------*/
-/* main {
-    padding: var(--space-lg);
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    background-image: url("https://img.freepik.com/free-vector/abstract-background-with-lines_1035-9038.jpg?semt=ais_hybrid&w=740");
-    background-size: cover;
-} */
-
-
-
-/* ----------------------Filter Styles------------- */
-
-
-
-
-
-/*----------------------- PRODUCT ----------------*/
-/* 
-#products-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-    gap: 2rem;
-}
-.product {
-    height: 100%;
-    background: var(--white);
-    transition: var(--transition-sm);
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(162, 199, 61, 0.3);
-    position: relative;
-    overflow-y: hidden;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--gray100);
-
-}
-
-i{
-   color: #fbbf24;
-}
-#icon{
     color: #f59e0b;
-   
+
 }
 
+#icon{
+    color: #f59e0b
+    ;
+}
 hr{
-    border-top: 1px dashed #f59e0b;
+  border-top: 1px dashed  #f59e0b;
+    margin: 10px 0;
 }
-
-
 /*------------------wishlist---------------------------*/
 .notification {
     position: fixed;
