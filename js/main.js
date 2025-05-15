@@ -200,29 +200,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
     if (!loginForm) return;
 
-    const emailInput = document.getElementById('loginEmail');
-    const passwordInput = document.getElementById('loginPassword');
-    if (!emailInput || !passwordInput) return;
+  const emailInput = document.getElementById('loginEmail');
+  const passwordInput = document.getElementById('loginPassword');
 
-    // all registered users from localStorage  
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
+  if (!emailInput || !passwordInput) return;
 
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = emailInput.value.trim().toLowerCase();
-        const password = passwordInput.value;
+  
+  // all registered users from localStorage  
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const email = emailInput.value.trim().toLowerCase();
+    const password = passwordInput.value;
 
         const user = users.find(u =>
             u.email === email && u.password === password
         );
 
-        if (!user) {
-            alert('Please enter valid email and password.');
-            return;
-        }
+    if (!user) {
+      alert('Please enter valid email and password.');
+      console.log("")
+      return;
+    }
 
-        user.isLoggedIn = true;
-        localStorage.setItem('users', JSON.stringify(users));
+    user.isLoggedIn = true;
+
+    localStorage.setItem('users', JSON.stringify(users));
 
         localStorage.setItem('currentUser', JSON.stringify(user));
 
@@ -305,7 +310,7 @@ const setupEventListeners = () => {
         
 
         const reviewsContainer = modal.querySelector(".reviews-section");
-        let reviewRating = '<i class="bi bi-star-fill"></i>'.repeat(Math.round(product.rating)) + '<i class="bi bi-star"></i>'.repeat(5 - Math.round(product.rating));
+        let reviewRating = '<i class="bi bi-star-fill" id="icon"></i>'.repeat(Math.round(product.rating)) + '<i class="bi bi-star" id="icon"></i>'.repeat(5 - Math.round(product.rating));
         reviewsContainer.innerHTML = product.reviews.map(review => `
     <div class="reviewDetails">
         <p class="reviewerName"><strong>${review.reviewerName}</strong></p>
@@ -562,20 +567,38 @@ document.addEventListener("DOMContentLoaded", async () => {
     await renderProducts();
     setupEventListeners();
 
-    // Update login/logout state
-    updateLoginState();
+  // Update login/logout state
+  updateLoginState();
 
-    // Add logout functionality
-    const logoutLink = document.querySelector(".logout");
-    if (logoutLink) {
-        logoutLink.addEventListener("click", function () {
-            // Clear user data from localStorage
-            localStorage.removeItem("currentUser");
-            // Update the UI
-            updateLoginState();
-            // Show a logout message
-            alert("You have been logged out successfully");
-        });
-    }
+  // Add logout functionality
+  const logoutLink = document.querySelector(".logout");
+  if (logoutLink) {
+    logoutLink.addEventListener("click", function() {
+      // Clear user data from localStorage
+      localStorage.removeItem("currentUser");
+      // Update the UI
+      updateLoginState();
+      // Show a logout message
+      alert("You have been logged out successfully");
+    });
+  }
+
+  // Add login functionality
+  const loginLink = document.querySelector(".login");
+  if (loginLink) {
+    loginLink.addEventListener("click", function(e) {
+      e.preventDefault();
+      document.getElementById('id01').style.display = 'block';
+    });
+  }
+
+  // Add register functionality
+  const registerLink = document.querySelector(".register");
+  if (registerLink) {
+    registerLink.addEventListener("click", function(e) {
+      e.preventDefault();
+      document.getElementById('id03').style.display = 'block';
+    });
+  }
 });
 

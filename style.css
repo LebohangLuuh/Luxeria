@@ -1,16 +1,60 @@
+
+/*--------reviews section------------------*/
+
 .reviewerName{
     color: #f59e0b
     ;
 }
 .reviewerName{
     font-weight: bold;
-    justify-content: space-between;
+
+}
+
+i{
+   color: #fbbf24;
+}
+#icon{
+    color: #f59e0b;
+   
 }
 
 hr{
-    margin: 10px 0;
     border-top: 1px dashed #f59e0b;
 }
-i{
-    color: #f59e0b;
+
+
+/*------------------wishlist---------------------------*/
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--primary150);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease-out;
+    z-index: 999;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+
+/*------------------ Responsive adjustments--------------------- */
+@media (max-width: 768px) {
+    .product-modal .modal-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .main-image {
+        height: 300px;
+    }
 }
